@@ -149,6 +149,7 @@ article q {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), inset 0 1px 3px rgba(255, 255, 255, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform: translateY(0) scale(1); /* Posisi awal stabil */
 }
 
 article q:hover {
@@ -163,16 +164,20 @@ article q::after {
   color: rgba(255, 255, 255, 0.05);
   position: absolute;
   z-index: -1;
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Transisi halus */
+  opacity: 1; /* Pastikan terlihat saat render pertama */
 }
 
 article q::before {
   top: -30px;
   left: 10px;
+  transform: translateY(0); /* Posisi awal */
 }
 
 article q::after {
   bottom: -35px;
   right: 10px;
+  transform: translateY(0); /* Posisi awal */
 }
 
 article q span {
