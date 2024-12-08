@@ -24,10 +24,25 @@ body {
 }
 
 .jumbotron h1 {
-  font-size: 3rem;
-  margin: 0;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.jumbotron h1.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#typingEffect {
   color: #ffc107;
-  text-shadow: 0 0 20px rgba(255, 193, 7, 0.6);
+  font-weight: bold;
+  white-space: nowrap;
+  display: inline-block;
+  min-width: 12ch; /* Estimasi panjang maksimal teks */
+  text-align: left;
+  transition: width 0.2s ease-out;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
 }
 
 main {
@@ -54,23 +69,98 @@ img:hover {
 }
 
 aside h3 {
+  position: relative;
   margin-top: 10px;
   padding: 10px;
   text-align: center;
-  background: linear-gradient(135deg, #111111, #333333);
-  border: solid 2px #ffc107;
   border-radius: 10px;
   color: #ffffff;
+  z-index: 1;
 }
 
-article h3 {
-  font-size: 1.2rem;
+aside h3::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid #ffc107;
+  border-radius: 10px;
+  animation: lineInfinite 3s linear infinite;
+  z-index: -1;
+}
+
+@keyframes lineInfinite {
+  0% {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  25% {
+    top: 0;
+    left: 0;
+    right: 100%;
+    bottom: 0;
+  }
+  50% {
+    top: 0;
+    left: 100%;
+    right: 100%;
+    bottom: 0;
+  }
+  75% {
+    top: 0;
+    left: 100%;
+    right: 0;
+    bottom: 0;
+  }
+  100% {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+article q {
+  font-size: 1.5rem;
   line-height: 1.8;
+  text-align: center;
+  display: block;
+  margin: 20px 0;
+  position: relative;
+  color: #ffc107;
 }
 
-span {
-  color: #ffc107;
-  font-weight: bold;
+article q::before,
+article q::after {
+  content: '"';
+  font-size: 3rem;
+  color: rgba(255, 255, 255, 0.1);
+  position: absolute;
+}
+
+article q::before {
+  top: -20px;
+  left: -10px;
+}
+
+article q::after {
+  bottom: -20px;
+  right: -10px;
+}
+
+#profileImage {
+  transform: perspective(1000px) rotateY(0deg);
+  transition: transform 0.8s ease, box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+#profileImage:hover {
+  transform: perspective(1000px) rotateY(15deg);
+  filter: brightness(1.2);
+  box-shadow: 0 0 20px #ffc107;
 }
 
 .contact {
@@ -97,6 +187,7 @@ span {
   transition: all 0.3s ease;
   cursor: pointer;
   width: auto;
+  transition: transform 0.3s ease;
 }
 
 .contact li::after {
@@ -118,6 +209,8 @@ span {
 .contact li:hover {
   background: #ffc107;
   box-shadow: 0 0 15px #ffc107;
+  transform: scale(1.2);
+
 }
 
 .contact li:hover a {
@@ -185,10 +278,6 @@ span {
     justify-content: center;
     align-items: center;
     gap: 10px;
-  }
-
-  .contact h3 {
-    font-size: x-large;
   }
 
   .contact li {
